@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Song Listings</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="rating"> <span class="sr-only">(current)</span></a>
+            </li>
+          </ul>
+
+           {% if user.is_authenticated %}
+           <form action = "logout" method="POST">
+             {% csrf_token %}
+             <button type="submit" class="btn btn-primary">Log Out</button>
+           </form>
+           {% else %}
+            <button class="btn btn-success float-right mx-2 my-2 my-sm-0"data-toggle="modal" data-target="#login" type="submit">
+            Log In
+            </button>
+
+            <!-- Login -->
+          <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="login">Log In</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form action = "login" method="POST">
+                      {% csrf_token %}
+                        <div class="form-group">
+                              <label for="exampleInputEmail1">Username</label>
+                              <input type="text" class="form-control" name="username" aria-describedby="emailHelp">
+                              <small id="emailHelp" class="form-text text-muted">We'll never share your username with anyone else.</small>
+                            </div>
+                            <div class="form-group">
+                              <label for="exampleInputPassword1">Password</label>
+                              <input type="password" class="form-control" name="password">
+                            </div>
+                            <div class="form-group form-check">
+                              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </form>
+                </div>
+              </div>
+            </div>
+         </div>
+          <button class="btn btn-success float-right mx-2 my-2 my-sm-0"data-toggle="modal" data-target="#signup" type="submit">
+            Sign Up
+            </button>
+            <!-- Sign up -->
+          <div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="signup" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Sign Up</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form action = "signup" method="POST">
+                      {% csrf_token %}
+                      <div class="form-group">
+                              <label for="InputUserFirstname">Fist Name</label>
+                              <input type="text" class="form-control" name="firstname" placeholder="Enter you first name">
+                          </div>
+                         <div class="form-group">
+                              <label for="InputUserLastname">Last Name</label>
+                              <input type="text" class="form-control" name="lastname" placeholder="Enter you last name">
+                          </div>
+                        <div class="form-group">
+                              <label for="InputUsername">Username</label>
+                              <input type="text" class="form-control" name="username" placeholder="Enter you username">
+                          </div>
+                          <div class="form-group">
+                              <label for="InputEmail1">Email</label>
+                              <input type="email" class="form-control" name="email" placeholder="Enter you email id">
+                          </div>
+                            <div class="form-group">
+                              <label for="InputPassword1">Password</label>
+                              <input type="password" class="form-control" name="password1" placeholder="Enter your password">
+                            </div>
+                            <div class="form-group">
+                              <label for="InputPassword2">Retype Password</label>
+                              <input type="password" class="form-control" name="password2" placeholder="Please retype your password">
+                            </div>
+                            <div class="form-group form-check">
+                              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </form>
+              </div>
+            </div>
+         </div>
+        </div>
+        {% endif %}
+      </nav>
+      {% if user.is_authenticated %}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Welcome {{user.first_name}}</strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      {% else %}
+      {% for i in messages%}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{i}}</strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+      <div class="container">
+        {% if user.is_authenticated %}
+        <br>
+        <a href="add.html" class="btn btn-info my-auto mx-2 float-right" role="button">Add Song</a>
+        <a href="rating" class="btn btn-info my-auto mx-2 float-right" role="button">Rate Song</a>
+        <br>
+        {% endif %}
+        <h3>Top Rated Songs</h3>
+          <table class="table">
+              <br>
+          <tbody>
+           {% for i, j in song_ratings.items %}
+            <tr>
+              <th scope="row"></th>
+              <td><img src="media/{{j.1}}" width="256" height="256"></td>
+              <td>{{i}}</td>
+              <td>{{j.2}}</td>
+              <td>{{j.0}}</td>
+            </tr>
+            {% endfor%}
+          </tbody>
+        </table>
+        <br>
+        <h3>Top Rated Artists</h3>
+          <table class="table">
+              <br>
+          <tbody>
+           {% for i, j in artist_ratings.items %}
+            <tr>
+              <th scope="row"></th>
+              <td>{{i}}</td>
+              <td>{{j}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <br>
+
+      </div>
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    </body>
+</html>
