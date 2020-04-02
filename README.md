@@ -29,7 +29,7 @@ to run them use following command
 docker-compose up --build
 ```
 
-And if incase it doesn't Work just cmake a small change in settings.py 
+And if incase it doesn't Work just make a small change in settings.py 
 
 Under Database configs change HOST = '127.0.0.1'
 
@@ -39,6 +39,23 @@ The command for that is
 
 ```
 python manage.py runserver
+```
+
+But before running make sure you have the Database already created in your MySQL and name and passwords of connecting to the MySQL server should be provided in the **settings.py** file
+
+Example
+
+```
+DATABASES = {
+  'default': {
+  'ENGINE': 'django.db.backends.mysql',
+  'NAME': 'databasename', # <- Here put your database name
+  'USER': 'username',
+  'PASSWORD': 'password',
+  'HOST': '127.0.0.1',
+  'PORT': '3306',
+  }
+}
 ```
 
 # Some screenshots of the project 
