@@ -31,7 +31,7 @@ docker-compose up --build
 
 And if incase it doesn't Work just make a small change in settings.py 
 
-Under Database configs change HOST = '127.0.0.1'
+Under Database configs change **'HOST' = '127.0.0.1'**
 
 And then you can run it on localhost
 
